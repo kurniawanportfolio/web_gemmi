@@ -1,0 +1,64 @@
+@extends('layouts.app')
+
+@section('content')
+
+    <main id="main">
+
+        <section id="breadcrumbs" class="breadcrumbs">
+            <div class="container">
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <h2>{{ __('EDIT DONASI') }}</h2>
+                    <ol>
+                        <li><a href="/">Kembali ke beranda</a></li>
+                    </ol>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="service" class="services">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-body border-0">
+                                <form role="form" method="POST" id="form_donasi" action="{{ route('donasi.update', $donasi->id) }}" enctype="multipart/form-data">
+                                    @csrf
+                                    <input type="hidden" name="_method" value="PUT">
+                                    <div class="form-group row">
+                                        <label for="jumlah_donasi" class="col-md-4 col-form-label text-md-right">{{ __('Jumlah/Pack') }}</label>
+                                        <div class="col-md-4">
+                                            <input id="jumlah_donasi" type="text" class="form-control @error('jumlah_donasi') is-invalid @enderror" name="jumlah_donasi" value="{{ explode(' ', $donasi->jumlah_donasi)[0] }}" autofocus>
+                                            @error('jumlah_donasi')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select name="format_jumlah" onselect="" class="form-control">
+                                                <option {{ explode(' ', $donasi->jumlah_donasi)[1]=='kotak'?'selected':'' }}>kotak</option>
+                                                <option {{ explode(' ', $donasi->jumlah_donasi)[1]=='bungkus'?'selected':'' }}>bungkus</option>
+                                                <option {{ explode(' ', $donasi->jumlah_donasi)[1]=='buah'?'selected':'' }}>buah</option>
+                                                <option {{ explode(' ', $donasi->jumlah_donasi)[1]=='dus'?'selected':'' }}>dus</option>
+                                                <option {{ explode(' ', $donasi->jumlah_donasi)[1]=='rupiah'?'selected':'' }}>rupiah</option>
+                                                <option {{ explode(' ', $donasi->jumlah_donasi)[1]=='lusin'?'selected':'' }}>lusin</option>
+                                                <option {{ explode(' ', $donasi->jumlah_donasi)[1]=='karung'?'selected':'' }}>karung</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-0">
+                                        <div class="col-md-8 offset-md-4">
+                                            <input type="submit" name="submit" value="Submit" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+@endsection
